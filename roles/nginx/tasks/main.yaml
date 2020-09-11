@@ -1,0 +1,24 @@
+- name: Install and configure nginx
+  apt:
+    name:
+      - nginx
+      
+- name: Copy the index page
+  copy:
+    src: index.html
+    dest: /srv/index.html
+    
+- name: Copy the nginx config
+  copy:
+    src: static_site.cfg
+    dest: /etc/nginx/sites-available/static_site.cfg
+    
+- name: Create the symlink
+  file:
+    src: /etc/nginx/sites-available/static_site.cfg
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+- name: Start nginx server
+  service:
+    name: nginx
+    state: started

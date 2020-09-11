@@ -1,0 +1,14 @@
+- name: Create juri
+  user: 
+    name: juri
+- name: Create key for juri
+  authorized_key:
+    user: juri
+    key: https://github.com/hudolejev.keys
+- name: Create roman
+  user:
+    name: roman
+- name: Create key for roman
+  authorized_key:
+    user: roman
+    key: https://github.com/romankuchin.keys
