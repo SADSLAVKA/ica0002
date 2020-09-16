@@ -12,6 +12,7 @@
   copy:
     src: static_site.cfg
     dest: /etc/nginx/sites-available/static_site.cfg
+  notify: Restart nginx
     
 - name: Create the symlink
   file:
@@ -19,7 +20,3 @@
     dest: /etc/nginx/sites-enabled/default
     state: link
 
-- name: Restart nginx 
-  service:
-    name: nginx
-    state: restarted

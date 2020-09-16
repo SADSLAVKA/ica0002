@@ -4,3 +4,5 @@
     become: yes
     roles:
       - agama
+      - uwsgi
+      - nginx
