@@ -1,0 +1,8 @@
+/home/juri added
+/home/juri/.ssh/authorized_keys changed
+/home/roman added
+/home/roman/.ssh/authorized_keys changed
+/etc/nginx added
+/srv/index.html added
+/etc/nginx/sites-available/static_site.cfg changed
+/etc/nginx/sites-enabled/default added

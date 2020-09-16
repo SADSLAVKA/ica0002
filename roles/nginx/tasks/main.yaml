@@ -1,4 +1,4 @@
-- name: Install and configure nginx
+- name: Install
   apt:
     name:
       - nginx
@@ -18,7 +18,8 @@
     src: /etc/nginx/sites-available/static_site.cfg
     dest: /etc/nginx/sites-enabled/default
     state: link
-- name: Start nginx server
+
+- name: Restart nginx 
   service:
     name: nginx
-    state: started
+    state: restarted
