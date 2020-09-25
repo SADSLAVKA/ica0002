@@ -1,0 +1,31 @@
+- name: Install MySQL server
+  apt:
+    name: mysql-server
+    
+- name: Start MySQL server on boot
+  service:
+    name: mysql
+    enabled: yes
+    
+- name: Copy the configuration file
+  copy:
+    src: override.cnf
+    dest: /etc/mysql/mysql.conf.d/override.cnf
+  notify: Restart MySQL
+  
+- name: Install pymysql
+  apt:
+    name: python3-pymysql
+  
+- name: MySQL database
+  mysql_db:
+    name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    
+- name: Create MySQL user
+  mysql_user:
+    priv: "{{ mysql_database }}.*:ALL"
+    host: "%"
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock

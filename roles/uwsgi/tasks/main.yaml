@@ -1,9 +1,9 @@
 - name: Install uWSGI packages
   apt:
-    name: uwsgi,uwsgi-plugin-python3
+    name: uwsgi,uwsgi-plugin-python3,python3-pymysql
     
 - name: Copy the uWSGI config
-  copy:
+  template:
     src: agama_config
     dest: /etc/uwsgi/apps-enabled/agama.ini
   notify: Restart uWSGI
