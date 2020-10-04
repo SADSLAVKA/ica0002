@@ -1,0 +1,7 @@
+- name: Restart DNS server
+  service:
+    name: bind9
+    state: restarted
+    
+- name: Reload master zone
+  shell: rndc reload

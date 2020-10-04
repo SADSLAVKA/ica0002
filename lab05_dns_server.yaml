@@ -1,0 +1,28 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    gather_facts: no
+    tasks:
+    - setup:
+    
+  - name: DNS server
+    hosts: my_vm_2
+    become: yes
+    gather_facts: no
+    roles:
+      - dns
+      
+  - name: Update resolv file
+    hosts: all
+    become: yes
+    gather_facts: no
+    tasks:
+      - service:
+          name: systemd-resolved
+          state: stopped
+      - template:
+          src: resolv.conf.j2
+          dest: /etc/resolv.conf
+      - service:
+          name: systemd-resolved
+          state: started
