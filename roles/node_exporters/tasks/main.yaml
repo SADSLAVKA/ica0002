@@ -1,0 +1,17 @@
+- name: Install node exporter and nginx
+  apt:
+    name:
+      - prometheus-node-exporter
+      - nginx
+
+- name: Copy the configuration for nginx
+  template:
+    src: node_exporter.j2
+    dest: /etc/nginx/sites-available/node_exporter.cfg
+  notify: Restart nginx
+
+  - name: Create symlink to config
+    file:
+      src: /etc/nginx/sites-available/node_exporter.cfg
+      dest: /etc/nginx/sites-enabled/default
+      state: link

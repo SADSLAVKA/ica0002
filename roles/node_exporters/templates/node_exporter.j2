@@ -1,0 +1,15 @@
+server {
+	listen 80 default_server;
+    root /var/www/html;
+	location / {
+		try_files $uri $uri/ =404;
+	}
+    location /metrics {
+		proxy_pass http://localhost:9100/metrics;
+	}
+    {{% if inventory_hostname == 'vm1' %}}
+      location /prometheus {
+        proxy_pass http://localhost:9090;
+    }
+    {{% endif %}}
+}
