@@ -4,7 +4,7 @@ acl locals {
       {% endfor %}
 };
 options {
-	directory "/var/cache/bind";
+	directory "/etc/bind";
 	forwarders {
       {% for f in dns_forwarders %}
 	    {{ f }};
@@ -14,7 +14,7 @@ options {
 	dnssec-validation no;
 	auth-nxdomain no;    # conform to RFC1035
 };
-zone "{{ hostvars['my_vm_2']['ansible_default_ipv4']['address'] }}" {
+zone "{{ zone }}" {
         type master;
         file "db.{{ startup }}";
 };
