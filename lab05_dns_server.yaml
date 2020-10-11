@@ -16,13 +16,5 @@
     hosts: all
     become: yes
     gather_facts: no
-    tasks:
-      - service:
-          name: systemd-resolved
-          state: stopped
-      - template:
-          src: resolv.conf.j2
-          dest: /etc/resolv.conf
-      - service:
-          name: systemd-resolved
-          state: started
+    roles:
+      - resolvers
