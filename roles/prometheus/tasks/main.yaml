@@ -1,0 +1,14 @@
+- name: Install prometheus
+  apt:
+    name: prometheus
+
+- name: Copy the file with defuault argument
+  template:
+    src: default.j2
+    dest: /etc/default/prometheus
+
+- name: Copy the configuration file for prometheus
+  template:
+    src: prometheus.j2
+    dest: /etc/prometheus/prometheus.yml 
+  notify: Restart prometheus

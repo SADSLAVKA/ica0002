@@ -1,0 +1,21 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    gather_facts: no
+    tasks:
+      - setup:
+  
+  - name: Install node exporters and nginx
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - node_exporters
+
+  - name: Install and configure prometheus
+    hosts: vm1
+    gather_facts: no
+    become: yes
+    roles: 
+      - prometheus
+      

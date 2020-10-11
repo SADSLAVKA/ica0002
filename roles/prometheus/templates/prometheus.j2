@@ -16,6 +16,6 @@ scrape_configs:
   - job_name: linux
     static_configs:
       - targets: 
-        {% for h in groups['all']-%}
-        - {{ h }}
+        {% for host in groups['all'] -%}
+        - '{{host}}.{{zone}}:9100'
         {% endfor %}

@@ -7,9 +7,9 @@ server {
     location /metrics {
 		proxy_pass http://localhost:9100/metrics;
 	}
-    {{% if inventory_hostname == 'vm1' %}}
-      location /prometheus {
+    {%- if inventory_hostname == 'vm1' %}
+      {% raw %}location /prometheus {
         proxy_pass http://localhost:9090;
-    }
-    {{% endif %}}
+    }{% endraw -%}
+    {% endif -%}
 }

@@ -11,3 +11,4 @@ mysql_password: !vault |
   
 startup: verysorry
 zone: verysorry.io
+public_http: http://193.40.156.86:10980

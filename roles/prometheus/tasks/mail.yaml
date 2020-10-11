@@ -1,3 +1,0 @@
-- name: Install prometheus
-  apt:
-    name: prometheus
