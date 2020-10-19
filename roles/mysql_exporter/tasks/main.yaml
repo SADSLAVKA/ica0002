@@ -1,0 +1,28 @@
+- name: Download MySql exporter
+  apt:
+    name: prometheus-mysqld-exporter
+    
+- name: Enable the exporter
+  service:
+    name: prometheus-mysqld-exporter
+    enabled: yes
+
+- name: Copy the my.cnf file
+  template:
+    src: .my.cnf.j2
+    dest: /var/lib/prometheus/.my.cnf
+  notify: Restart mysql_exporter
+
+- name: Install pymysql
+  apt:
+    name: python3-pymysql
+
+- name: Create MySQL user
+  mysql_user:
+    priv: "*.*:PROCESS,REPLICATION CLIENT"
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    state: present
+  
+

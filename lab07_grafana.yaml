@@ -1,0 +1,16 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    gather_facts: no
+    become: yes
+    tasks:
+    - setup:
+    - apt:
+        update_cache: yes
+
+  - name: Install MySql exporter
+    hosts: db_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql_exporter
