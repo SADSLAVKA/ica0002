@@ -5,6 +5,7 @@
 - name: Start MySQL server on boot
   service:
     name: mysql
+    state: started
     enabled: yes
     
 - name: Copy the configuration file

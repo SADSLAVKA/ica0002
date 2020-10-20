@@ -1,0 +1,39 @@
+- name: Extract the executable
+  unarchive:
+    src: "{{ nginx_exporter_link }}"
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Set file permissions
+  file:
+   path: /usr/local/bin/nginx-prometheus-exporter
+   mode: '0755'
+   owner: root
+   group: root
+
+- name: Create the service
+  template:
+    src: prometheus-nginx-exporter.service.j2
+    dest: /lib/systemd/system/prometheus-nginx-exporter.service
+    mode: '0644'
+    owner: root
+    group: root
+  notify:
+    - Reload the daemons
+    - Restart nginx exporter
+
+- name: Create the link
+  file:
+    src: /lib/systemd/system/prometheus-nginx-exporter.service
+    dest: /etc/systemd/system/prometheus-nginx-exporter.service
+    state: link
+
+- name: Ensure that user prometheus exists
+  user:
+    name: prometheus
+    home: /var/lib/prometheus
+
+- name: Start the service
+  service:
+    name: prometheus-nginx-exporter
+    state: started

@@ -5,6 +5,11 @@
       - prometheus-node-exporter
       - nginx
 
+- name: Enable node exporter
+  service:
+    name: prometheus-node-exporter
+    enabled: yes
+
 - name: Copy the configuration for nginx
   template:
     src: node_exporter.j2

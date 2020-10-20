@@ -1,0 +1,51 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        listen 8080 default_server;
+        {%- if inventory_hostname == groups['web_servers'][0] -%}
+        root /srv;
+        index index.html;
+        {%- else -%}
+        root /var/www/html;
+        {%- endif -%}
+        server_name _;
+        location / {
+            {%- if inventory_hostname == groups['web_servers'][0] -%}
+            uwsgi_pass localhost:5000;
+		    include uwsgi_params;
+            {%- else -%}
+            try_files $uri $uri/ =404;
+            {% endif %}
+        }
+        location /metrics {
+		    proxy_pass http://localhost:9100/metrics;
+	    }
+        {%- if inventory_hostname == groups['db_servers'][0] %}
+        location /mysql-metrics {
+            proxy_pass http://localhost:9104/metrics;
+        }
+        {% endif %}
+        {%- if inventory_hostname == groups['dns_servers'][0] %}
+        location /bind-metrics {
+            proxy_pass http://localhost:9119/metrics;
+        }
+        {% endif %}
+        {%- if inventory_hostname == groups['web_servers'][0] %}
+        location /nginx-metrics {
+            proxy_pass http://localhost:9113/metrics;
+        }
+        location /stub_status {
+            stub_status;
+        }
+        {% endif %}
+        {%- if inventory_hostname == groups['prometheus'][0] %}
+        location /prometheus {
+            proxy_pass http://localhost:9090/prometheus;
+        }
+        {% endif %}
+        {%- if inventory_hostname == groups['grafana'][0] %}
+        location /grafana {
+            proxy_pass http://localhost:3000;
+        }
+        {% endif %}
+}

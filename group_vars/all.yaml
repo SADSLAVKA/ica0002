@@ -21,3 +21,34 @@ mysql_exporter_pass: !vault |
           62353034383264383831626238376534386533646564326663356266393936383631343134656232
           3336353037393038630a386465376236303566303930336137333637653834613432383031343163
           6466
+
+nginx_exporter_link : https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v0.8.0/nginx-prometheus-exporter-0.8.0-linux-amd64.tar.gz
+
+dns_cnames: 
+  - cname: dns
+    real: "{{ groups['dns_servers'][0] }}"
+  - cname: prometheus
+    real: "{{ groups['prometheus'][0] }}"
+  - cname: db
+    real: "{{ groups['db_servers'][0] }}"
+  - cname: www
+    real: "{{ groups['web_servers'][0] }}"
+  - cname: grafana
+    real: "{{ groups['grafana'][0] }}"
+
+prometheus_jobs:
+  - name: node
+    targets: "{{ groups['all'] }}"
+    port: 9100
+  - name: bind
+    targets:
+      - dns
+    port: 9119
+  - name: mysql
+    targets:
+      - db
+    port: 9104
+  - name: www
+    targets:
+      - www
+    port: 9113

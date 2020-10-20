@@ -7,10 +7,68 @@
     - setup:
     - apt:
         update_cache: yes
+    tags:
+      - dns
 
-  - name: Install MySql exporter
+  - name: Install MySql with exporter
     hosts: db_servers
     become: yes
     gather_facts: no
     roles:
+      - mysql
       - mysql_exporter
+
+  - name: Install DNS with exporter
+    hosts: dns_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - dns
+      - bind9_exporter
+    tags:
+      - dns
+
+  - name: Install webapp with nginx and nginx exporter
+    hosts: web_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - agama
+      - uwsgi
+      - nginx
+      - nginx_exporter
+    tags:
+      - nginx
+
+  - name: Install prometheus
+    hosts: prometheus
+    become: yes
+    gather_facts: no
+    roles:
+      - prometheus
+
+  - name: Install grafana
+    hosts: grafana
+    become: yes
+    gather_facts: no
+    roles:
+      - grafana
+    tags:
+      - grafana
+
+  - name: Install node exporters and configure reverse proxies
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - node_exporter
+      - reverse_proxy
+    tags: 
+      - reverse
+
+  - name: Resolvers
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - resolvers
