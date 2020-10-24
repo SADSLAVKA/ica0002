@@ -2,17 +2,17 @@
   apt:
     name: mysql-server
     
-- name: Start MySQL server on boot
-  service:
-    name: mysql
-    state: started
-    enabled: yes
-    
 - name: Copy the configuration file
   copy:
     src: override.cnf
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart MySQL
+
+- name: Start MySQL server on boot
+  service:
+    name: mysql
+    state: started
+    enabled: yes
   
 - name: Install pymysql
   apt:

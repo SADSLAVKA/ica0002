@@ -8,8 +8,7 @@
     dest: /etc/uwsgi/apps-enabled/agama.ini
   notify: Restart uWSGI
     
-- name: Start uWSGI service
+- name: Enable uWSGI service
   service:
     name: uwsgi
-    state: started
     enabled: yes

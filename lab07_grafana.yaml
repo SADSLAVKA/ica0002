@@ -9,6 +9,7 @@
         update_cache: yes
     tags:
       - dns
+      - nginx
 
   - name: Install MySql with exporter
     hosts: db_servers
@@ -46,6 +47,8 @@
     gather_facts: no
     roles:
       - prometheus
+    tags:
+      - prometh
 
   - name: Install grafana
     hosts: grafana
@@ -56,7 +59,7 @@
     tags:
       - grafana
 
-  - name: Install node exporters and configure reverse proxies
+  - name: Install node exporters and configure nginx with reverse proxies
     hosts: all
     become: yes
     gather_facts: no

@@ -2,18 +2,19 @@ server {
         listen 80 default_server;
         listen [::]:80 default_server;
         listen 8080 default_server;
-        {%- if inventory_hostname == groups['web_servers'][0] -%}
+        {%- if inventory_hostname == groups['web_servers'][0] %}
         root /srv;
         index index.html;
-        {%- else -%}
+        {%- else %}
         root /var/www/html;
         {%- endif -%}
         server_name _;
         location / {
-            {%- if inventory_hostname == groups['web_servers'][0] -%}
+            {% if inventory_hostname == groups['web_servers'][0] -%}
             uwsgi_pass localhost:5000;
+            #uwsgi_pass unix:/opt/agama/agama.sock;
 		    include uwsgi_params;
-            {%- else -%}
+            {%- else %}
             try_files $uri $uri/ =404;
             {% endif %}
         }

@@ -7,16 +7,3 @@
   copy:
     src: index.html
     dest: /srv/index.html
-    
-- name: Copy the nginx config
-  copy:
-    src: static_site.cfg
-    dest: /etc/nginx/sites-available/static_site.cfg
-  notify: Restart nginx
-    
-- name: Create the symlink
-  file:
-    src: /etc/nginx/sites-available/static_site.cfg
-    dest: /etc/nginx/sites-enabled/default
-    state: link
-

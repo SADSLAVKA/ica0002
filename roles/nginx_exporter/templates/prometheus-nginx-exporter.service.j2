@@ -5,7 +5,7 @@ Documentation= https://github.com/nginxinc/nginx-prometheus-exporter
 [Service]
 Restart=always
 User=prometheus
-ExecStart=/usr/local/bin/nginx-prometheus-exporter
+ExecStart=/usr/local/bin/nginx-prometheus-exporter $ARGS
 
 [Install]
 WantedBy=multi-user.target
