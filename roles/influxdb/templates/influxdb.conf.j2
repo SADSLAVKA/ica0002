@@ -1,0 +1,9 @@
+reporting-enabled = false
+hostname="{{ hostvars[groups['influxdb'][0]]['ansible_default_ipv4']['address'] }}"
+
+[meta]
+  dir = "/var/lib/influxdb/meta"
+
+[data]
+  dir = "/var/lib/influxdb/data"
+  wal-dir = "/var/lib/influxdb/wal"

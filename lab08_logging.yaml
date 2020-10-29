@@ -1,0 +1,30 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    gather_facts: no
+    become: yes
+    tasks:
+    - setup:
+    - apt:
+        update_cache: yes
+      
+  - name: Pinger
+    hosts: vm2
+    gather_facts: no
+    become: yes
+    roles: 
+      - pinger
+
+  - name: Influxdb and Telegraf
+    hosts: influxdb
+    gather_facts: no
+    become: yes
+    roles:
+      - influxdb
+
+  - name: Rsyslog config
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - rsyslog

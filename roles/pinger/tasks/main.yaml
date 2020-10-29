@@ -1,0 +1,46 @@
+- name: Create user pinger
+  user:
+    name: pinger
+
+- name: Install dependency fping
+  apt:
+    name: fping
+
+- name: Copy the script
+  copy:
+    src: pinger.sh
+    dest: /usr/local/bin/pinger
+    owner: root
+    group: root
+    mode: '0755'
+  notify: Restart pinger
+
+- name: Create the directory
+  file:
+    path: /etc/pinger
+    state: directory
+    mode: '0755'
+
+- name: Copy the config file
+  template:
+    src: pinger.conf.j2
+    dest: /etc/pinger/pinger.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart pinger
+
+- name: Create the service
+  copy:
+    src: pinger.service
+    dest: /lib/systemd/system/pinger.service
+    mode: '0644'
+    owner: root
+    group: root
+  notify: Reload the daemons
+    
+- name: Create the link
+  file:
+    src: /lib/systemd/system/pinger.service
+    dest: /etc/systemd/system/pinger.service
+    state: link

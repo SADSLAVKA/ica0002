@@ -1,0 +1,35 @@
+- name: Install InfluxDB and its client
+  apt:
+    name:
+      - influxdb
+      - influxdb-client
+
+- name: Modify InfluxDB hostname
+  template:
+    src: influxdb.conf.j2
+    dest: /etc/influxdb/influxdb.conf
+  notify: Restart influxdb
+    
+#- name: Create sample database
+#  command: influx -execute 'CREATE DATABASE latency'
+
+- name: Download Telegraf
+  get_url:
+    url: https://dl.influxdata.com/telegraf/releases/telegraf_1.16.1-1_amd64.deb
+    dest: /tmp/telegraf_1.16.1-1_amd64.deb
+    checksum: sha256:3997e207fa982bd29e3b54cc829e77e4ebf519bd292a91a43ffc75a2606e9e76
+
+- name: Install Telegraf
+  apt:
+    deb: /tmp/telegraf_1.16.1-1_amd64.deb
+
+- name: Enable Telegraf
+  service:
+    name: telegraf
+    enabled: yes
+
+- name: Telegraf config
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+  notify: Restart telegraf

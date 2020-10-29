@@ -35,6 +35,8 @@ dns_cnames:
     real: "{{ groups['web_servers'][0] }}"
   - cname: grafana
     real: "{{ groups['grafana'][0] }}"
+  - cname: influxdb
+    real: "{{ groups['influxdb'][0] }}"
 
 prometheus_jobs:
   - name: node
