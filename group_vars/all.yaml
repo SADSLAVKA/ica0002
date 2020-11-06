@@ -38,6 +38,8 @@ dns_cnames:
   - cname: influxdb
     real: "{{ groups['influxdb'][0] }}"
 
+backup_ip: 192.168.42.39
+
 prometheus_jobs:
   - name: node
     targets: "{{ groups['all'] }}"
