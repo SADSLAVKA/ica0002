@@ -5,11 +5,11 @@ This service processes incoming network requests: serves HTML documents over HTT
 Only meaningful subject for backup is configuration file(s). No additional files required.
 
 ### 1.2 Backup RPO
-Backup should contain latest configuration files that passed checks in testing environment.
+Backup should contain latest configuration files that worked in production environment.
 ### 1.3 Backup RTO
-Service doesn't deal with user data directly although other services that do deal with user data and logs depend on the web servers. Service should be restored within 2 hours.
+This service is one of the main components of the infrastructure and other services rely on it. Service should be restored within 2 hours.
 ### 1.4 Versioning and retention
-Service doesn't require sophisticated configuration so one version of the backup will be enough. Backup should be stored as until new configuration is approved for production environment.
+Service doesn't require sophisticated configuration so one version of the backup will be enough. Backup should be stored for 120 days (effectively until new configuration is approved for production environment if it does).
 ### 1.5 Usability
 #### 1.5.1 Syntax
 Syntax of the backup files should be verified using command line tools.
@@ -28,7 +28,7 @@ Should the list of web application dependencies ever grow it should be immeadiat
 #### 2.1.3 Source code
 Application isn't compiled so there is no build files that need to be stored. Only source code that passed testing.
 ### 2.2 Backup RPO
-Backup should contain latest source code and uWSGI configuration
+Backup should contain latest source code and uWSGI configuration that worked in production environment.
 ### 2.3 Backup RTO
 This service directly interacts with customers therefore it should be restored within 3 hours
 ### 2.4 Versioning and retention
@@ -53,7 +53,7 @@ This service contains and stores user data. Backup that is being restored should
 ### 3.3 Backup RTO
 This service is a crucial component of main business process. It should be restored within 3 hours.
 ### 3.4 Versioning and retention
-2 versions of backup shoud be kept so that in event of unsuccessful database schema modification previous working state could be restored. Backup retention perioud is 4 days.
+2 versions of backup shoud be kept so that if newly introduced change to schema proves inefficient previous working state could be restored. Backup retention perioud is 4 days.
 ### 3.5 Usability 
 #### 3.5.1 Configuration file
 File of ini format. Contains a line that allows outside connections to database.
@@ -61,3 +61,21 @@ File of ini format. Contains a line that allows outside connections to database.
 This file should contain correct DML/DDL statements which can be verifyied with tools created for database administration. Also should contain up-to-date records. Their number can be verifyied by running query that counts number of rows.
 ### 3.6 Restoration criteria
 This service should be restored in event of critical failure of the hardware(disk corruption etc.) or in event of security breach that results in data loss.
+
+## 4. DNS servers
+This service resolves ip addresses to human readable names that appear in configuration files and monitoring applications.
+### 4.1 Backup coverage
+Backup should contain up-to-date configuration of the service along with description of the zone.
+### 4.2 Backup RPO
+Backup should contain latest configuration files that worked in production environment.
+### 4.3 Backup RTO
+Service is crucial to the entire infrustructure operation. It should be restored within 2 hours.
+### 4.4 Versioning and retention
+2 versions of backups should be kept so that reverting to previous settings after some time would be possible. Backup should be stored for 120 days (effectively until new configuration is approved for production environment if it does).
+### 4.5 Usability
+#### 4.5.1 Configuration file
+File should be of conf format. It should contain relevant acl entries and forwarders that. It should also contain lines that expose statistics for monitoring.
+#### 4.5.2 Zone file
+This file contains up-to-date information about zone and admin email. It also includes translation for all machines in the network and their aliases.
+### 4.6 Restoration criteria
+This service should be restored to working state after it is determined that it is mulfunctioning.
