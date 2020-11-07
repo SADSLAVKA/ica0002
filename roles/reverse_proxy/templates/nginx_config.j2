@@ -31,14 +31,14 @@ server {
             proxy_pass http://localhost:9119/metrics;
         }
         {% endif %}
-        {%- if inventory_hostname == groups['web_servers'][0] %}
+        
         location /nginx-metrics {
             proxy_pass http://localhost:9113/metrics;
         }
         location /stub_status {
             stub_status;
         }
-        {% endif %}
+        
         {%- if inventory_hostname == groups['prometheus'][0] %}
         location /prometheus {
             proxy_pass http://localhost:9090/prometheus;

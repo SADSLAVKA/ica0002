@@ -37,7 +37,6 @@
       - agama
       - uwsgi
       - nginx
-      - nginx_exporter
     tags:
       - nginx
 
@@ -65,6 +64,7 @@
     gather_facts: no
     roles:
       - node_exporter
+      - nginx_exporter
       - reverse_proxy
     tags: 
       - reverse
