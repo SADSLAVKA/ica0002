@@ -79,3 +79,62 @@ File should be of conf format. It should contain relevant acl entries and forwar
 This file contains up-to-date information about zone and admin email. It also includes translation for all machines in the network and their aliases.
 ### 4.6 Restoration criteria
 This service should be restored to working state after it is determined that it is mulfunctioning.
+
+## 5. Monitoring servers
+This group of services monitores state of different components of the infrastructure as well as state of the machines that host them.
+### 5.1 Backup coverage
+#### 5.1.1 Prometheus
+This component relies on 2 configuration files: arguments for the service itself and prometheus configuration.
+#### 5.1.2 Node and service exporters
+These components rely on reverse proxy configuration for nginx. Service exporters require additional configuration: exposing statistics channel of monitored service, special configuration file, deamon file for service creation.
+#### 5.1.3 Grafana
+This service's configuration file must be backuped as well as dashboards that are meant for data visualization.
+#### 5.1.3 InfluxDB and Telegraf
+Configuration files of the services must be backuped. Records for the past 2 weeks must be retrieved from the database and archived.
+### 5.2 Backup RPO
+Backup must contain all the config files. Log loss worth of 4 hours is tolerable.
+### 5.3 Backup RTO
+Group of services must be restored within 3 hours.
+### 5.4 Versioning and retention
+#### 5.4.1 Configuration files
+2 versions: previously working configration and current working configuration. Backups are stored for 60 days.
+#### 5.4.2 Log records
+Log records are stored for 180 days. One version per archive.
+### 5.5 Usability
+#### 5.5.1 Prometheus configuration file
+It is a file of yaml format and contains all the jobs relevant to the current infrastructure.
+#### 5.5.2 Grafana
+Configuration file is of format ini. Dashborads are json files that most importantly contain database queries.
+#### 5.5.3 InfluxDB and Telegraf
+Configuration files are of conf format.
+### 5.6 Restoration criteria
+Component should be restored whenever it is mulfunctioning.
+
+## 6. Ansible repository
+Group of files that descrive what services are installed, on what machines and how they are configured.
+### 6.1 Backup coverage
+#### 6.1.1 Variable's files
+These files contain all the important information for infrastructure configuration and therefore should be backuped.
+#### 6.1.2 Roles
+Files that describe how services are installed and configuration templates/files must be backuped.
+#### 6.1.3 Vault password
+Password used for encryption of sensitive data should stored in a secure location.
+#### 6.1.4 Playbooks
+Configuration scenarios must be backuped.
+### 6.2 Backup RPO
+Backup should contain latest working repository
+### 6.3 Backup RTO
+Repository should be restored to working state within 24 hours.
+### 6.4 Versioning and retention
+2 backup versions: previously working repository and currently working repository. Backups are stored for 60 days.
+### 6.5 Usability
+#### 6.5.1 Variable's files
+These files contain all the information relevent to current infrastructure: dns zone name, cnames, ip addresses, encrypted credentials for various services.
+#### 6.5.2 Roles
+Roles directory contain main yaml file with relevant actions. Files and templates are of suitable format for service configuration. Templates must be Jinja2 templates.
+#### 6.5.3 Vault password
+This password should be able to decrypt encrypted user credentials from variable's files.
+#### 6.5.4 Playbooks
+These files are of yaml format and describe what services and where are installed.
+### 6.6
+Repository must be restored only when issues cannot be resolved at all.
