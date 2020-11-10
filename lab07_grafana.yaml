@@ -29,7 +29,7 @@
     tags:
       - dns
 
-  - name: Install webapp with nginx and nginx exporter
+  - name: Install webapp with nginx
     hosts: web_servers
     become: yes
     gather_facts: no
@@ -58,7 +58,7 @@
     tags:
       - grafana
 
-  - name: Install node exporters and configure nginx with reverse proxies
+  - name: Install node and nginx exporters and configure nginx with reverse proxies
     hosts: all
     become: yes
     gather_facts: no
