@@ -30,3 +30,19 @@
     name: "{{ mysql_user }}"
     password: "{{ mysql_password }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Create backup user for MySQL
+  mysql_user:
+    priv: "{{ mysql_database }}.*:SELECT,SHOW VIEW,TRIGGER,LOCK TABLES"
+    name: "backup"
+    password: "{{ backup_mysql_pass }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  #when: inventory_hostname == groups['db_servers'][0]
+
+- name: Create config file for MySQL
+  template:
+    src: .my.cnf.j2
+    dest: /home/backup/.my.cnf
+    owner: backup
+    mode: '0400'
+  #when: inventory_hostname == groups['db_servers'][0]
