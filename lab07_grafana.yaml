@@ -18,6 +18,8 @@
     roles:
       - mysql
       - mysql_exporter
+    tags:
+      - db
 
   - name: Install DNS with exporter
     hosts: dns_servers
