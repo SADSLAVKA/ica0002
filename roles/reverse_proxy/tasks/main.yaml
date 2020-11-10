@@ -1,11 +1,10 @@
+- name: Enable nginx
+  service:
+    name: nginx
+    enabled: yes
+
 - name: Copy the nginx config
   template:
     src: nginx_config.j2
-    dest: /etc/nginx/sites-available/nginx_config
+    dest: /etc/nginx/conf.d/reverse_proxies
   notify: Restart nginx
-    
-- name: Create the symlink
-  file:
-    src: /etc/nginx/sites-available/nginx_config
-    dest: /etc/nginx/sites-enabled/default
-    state: link
