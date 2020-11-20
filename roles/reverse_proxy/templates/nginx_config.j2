@@ -2,10 +2,10 @@ server {
         listen 80 default_server;
         listen [::]:80 default_server;
         listen 8080 default_server;
-        {%- if inventory_hostname == groups['web_servers'][0] %}
+        {% if inventory_hostname == groups['web_servers'][0] %}
         root /srv;
         index index.html;
-        {%- else %}
+        {% else %}
         root /var/www/html;
         {%- endif -%}
         server_name _;
@@ -32,12 +32,14 @@ server {
         }
         {% endif %}
         
+        {%- if inventory_hostname == groups['web_servers'][0] %}
         location /nginx-metrics {
             proxy_pass http://localhost:9113/metrics;
         }
         location /stub_status {
             stub_status;
         }
+        {% endif %}
         
         {%- if inventory_hostname == groups['prometheus'][0] %}
         location /prometheus {
