@@ -7,3 +7,37 @@
     ssh_key_type: ed25519
     ssh_key_file: .ssh/id_rsa
     password: "{{ backup_user_pass }}"
+
+- name: Add user to grafana group
+  user:
+    name: backup
+    group: grafana
+  when: inventory_hostname == groups['grafana'][0]
+
+- name: Create backup user for MySQL
+  mysql_user:
+    priv: "{{ mysql_database }}.*:SELECT,SHOW VIEW,TRIGGER,LOCK TABLES"
+    name: "backup"
+    password: "{{ backup_mysql_pass }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  when: inventory_hostname == groups['db_servers'][0]
+
+- name: Create config file for MySQL
+  template:
+    src: .my.cnf.j2
+    dest: /home/backup/.my.cnf
+    owner: backup
+    mode: '0400'
+  when: inventory_hostname == groups['db_servers'][0]
+
+- name: Create the directories
+  file:
+    path: /home/backup/{{ item }}
+    state: directory
+    mode: '0644'
+    owner: backup
+    group: backup
+  loop:
+    - backup
+    - restore
+    - scripts
