@@ -65,3 +65,14 @@ backup_mysql_pass: !vault |
           61646133376663666636326432643166383735383038646561646561633531303231643565343035
           6464616537373039380a373832303238643264393238313833303930303064643633366435333937
           6164
+
+backup_scripts:
+  - name: backup-dash.py
+    host: "{{ groups['grafana'][0] }}"
+    frequency: "30 1 1 * *"
+  - name: backup-database.sh
+    host: "{{ groups['db_servers'][0] }}"
+    frequency: "1 1 * * *"
+  - name: backup-syslog.sh
+    host: "{{ groups['influxdb'][0] }}"
+    frequency: "0 0 * * *"

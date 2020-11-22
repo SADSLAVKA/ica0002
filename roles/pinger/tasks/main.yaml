@@ -33,14 +33,14 @@
 - name: Create the service
   copy:
     src: pinger.service
-    dest: /lib/systemd/system/pinger.service
+    dest: /etc/systemd/system/pinger.service
     mode: '0644'
     owner: root
     group: root
   notify: Reload the daemons
     
-- name: Create the link
-  file:
-    src: /lib/systemd/system/pinger.service
-    dest: /etc/systemd/system/pinger.service
-    state: link
+#- name: Create the link
+#  file:
+#    src: /lib/systemd/system/pinger.service
+#    dest: /etc/systemd/system/pinger.service
+#    state: link

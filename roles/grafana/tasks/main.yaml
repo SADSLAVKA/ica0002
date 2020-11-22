@@ -25,8 +25,8 @@
     state: started
     enabled: yes
 
-- name: Add user backup to grafana group
-  user:
-    name: backup
-    groups: grafana
-    append: yes
+#- name: Add user backup to grafana group
+#  user:
+#    name: backup
+#    groups: grafana
+#    append: yes

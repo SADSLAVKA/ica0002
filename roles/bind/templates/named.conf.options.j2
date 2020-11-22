@@ -1,0 +1,23 @@
+acl locals {
+    {% for a in allowed_addresses %}
+	    {{ a }};
+      {% endfor %}
+};
+options {
+	directory "/etc/bind";
+	forwarders {
+      {% for f in dns_forwarders %}
+	    {{ f }};
+      {% endfor %}
+	};
+	allow-query {locals;};
+	dnssec-validation no;
+	auth-nxdomain no;    # conform to RFC1035
+};
+zone "{{ zone }}" {
+        type master;
+        file "db.{{ startup }}";
+};
+statistics-channels {
+  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};

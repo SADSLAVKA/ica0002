@@ -11,38 +11,80 @@
       - dns
       - nginx
       - reverse
-
-  - name: Install MySql with exporter
-    hosts: db_servers
-    become: yes
-    gather_facts: no
-    roles:
-      - mysql
-      - mysql_exporter
-    tags:
-      - db
-
-  - name: Install DNS with exporter
+   
+  - name: Install DNS service
     hosts: dns_servers
     become: yes
     gather_facts: no
     roles:
       - dns
-      - bind9_exporter
     tags:
       - dns
 
-  - name: Install webapp with nginx
+  - name: Resolvers
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - resolvers
+    tags:
+      - dns
+
+  - name: Install nginx and node exporters
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - nginx
+      - node_exporter
+    tags: 
+      - nginx
+
+  - name: Install DNS metrics exporter
+    hosts: dns_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - bind_exporter
+    tags:
+      - dns-metrics
+
+  - name: Install MySQL database
+    hosts: db_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql
+    tags:
+      - db
+
+  - name: Install MySQL database metrics exporter
+    hosts: db_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql_exporter
+    tags:
+      - db-metrics
+
+  - name: Install webapp 'Agama'
     hosts: web_servers
     become: yes
     gather_facts: no
     roles:
       - agama
       - uwsgi
-      - nginx
+    tags:
+      - webapp
+
+  - name: Install nginx metrics exporter
+    hosts: web_servers
+    become: yes
+    gather_facts: no
+    roles:
       - nginx_exporter
     tags:
-      - nginx
+      - web-metrics
 
   - name: Install prometheus
     hosts: prometheus
@@ -51,7 +93,7 @@
     roles:
       - prometheus
     tags:
-      - prometh
+      - prometheus
 
   - name: Install grafana
     hosts: grafana
@@ -62,19 +104,18 @@
     tags:
       - grafana
 
-  - name: Install node and nginx exporters and configure nginx with reverse proxies
+  - name: Configure reverse proxies
     hosts: all
     become: yes
     gather_facts: no
     roles:
-      - node_exporter
       - reverse_proxy
     tags: 
       - reverse
-
-  - name: Resolvers
-    hosts: all
-    become: yes
-    gather_facts: no
-    roles:
-      - resolvers
+      - nginx
+      - webapp
+      - db-metrics
+      - dns-metrics
+      - grafana
+      - prometheus
+      - web-metrics

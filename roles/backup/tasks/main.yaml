@@ -11,7 +11,8 @@
 - name: Add user to grafana group
   user:
     name: backup
-    group: grafana
+    groups: 
+      - grafana
   when: inventory_hostname == groups['grafana'][0]
 
 - name: Create backup user for MySQL
@@ -34,10 +35,29 @@
   file:
     path: /home/backup/{{ item }}
     state: directory
-    mode: '0644'
+    mode: '0744'
     owner: backup
     group: backup
   loop:
     - backup
     - restore
     - scripts
+
+- name: Copy backup scripts
+  template:
+    src: "{{ item.name }}"
+    dest: "/home/backup/scripts/{{ item.name }}"
+    mode: '0700'
+    owner: backup
+    group: backup
+  when: inventory_hostname == item.host
+  loop: "{{ backup_scripts }}"
+
+- name: Install duplicity
+  apt:
+    name: duplicity
+
+- name: Schedule cron jobs
+  template:
+    src: cron_schedule.j2
+    dest: /etc/cron.d/backup

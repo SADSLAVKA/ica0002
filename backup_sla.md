@@ -6,13 +6,13 @@ This service provides reliable and effective storage and retrieval of data store
 Backup should contain all the database tables and records along with configured users and their priveleges.
 
 ### 1.2 Backup RPO
-This service contains and stores user data. Backup that is being restored should not be older than 4 days.
+This service contains and stores user data. Backup that is being restored should not be older than 2 days.
 
 ### 1.3 Backup RTO
 This service is a crucial component of main business process. It should be restored within 3 hours.
 
 ### 1.4 Backup frequency
-Backup of this service has to be made every 2 days.
+Backup of this service has to be made every day. Every 7th backup is a full one, others are incremental.
 
 ### 1.5 Versioning and retention
 2 versions of backup shoud be kept so that if newly introduced change to schema proves inefficient previous working state could be restored. Backup retention period is 4 days.
@@ -32,11 +32,11 @@ This group of services monitores state of different components of the infrastruc
 Dashboards that are meant for data visualization must be backuped.
 
 #### 2.1.2 InfluxDB
-Records for the past 14 days must be retrieved from the database and archived.
+Records for the past 24 hours must be retrieved from the database and archived.
 
 ### 2.2 Backup RPO
 #### 2.2.1 Grafana dashboards
-Dashboards should no be older than 30 days. 
+Dashboards should no be older than 31 days. 
 #### 2.2.2 InfuxDB log records
 Log loss worth of 4 hours is tolerable.
 
@@ -45,9 +45,9 @@ Group of services must be restored within 3 hours.
 
 ### 2.4 Backup frequency
 #### 2.4.1 Grafana dashboards
-Backup of the dashboards should be made every 30 days.
+Backup of the dashboards should be made every first day of the month. Only full backups.
 #### 2.4.2 InfluxDB log records
-Log records must be backuped every 14 days.
+Log records must be archived every day.
 
 ### 2.5 Versioning and retention
 #### 2.5.1 Dashboards
@@ -59,7 +59,7 @@ Log records are stored for 180 days. One version per archive.
 #### 2.6.1 Grafana
 Dashborads are json files that most importantly contain database queries for metrics.
 #### 2.6.2 InfluxDB log records
-Records contain syslog format messages.
+Archive contains records with timestamps in nanoseconds, messages, hostnames of machines where the log came from.
 
 ### 2.7 Restoration criteria
 Component should be restored whenever it is mulfunctioning.
