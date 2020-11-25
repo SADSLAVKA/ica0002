@@ -3,8 +3,8 @@
     name: mysql-server
     
 - name: Copy the configuration file
-  copy:
-    src: override.cnf
+  template:
+    src: override.cnf.j2
     dest: /etc/mysql/mysql.conf.d/override.cnf
   notify: Restart MySQL
 
@@ -30,3 +30,12 @@
     name: "{{ mysql_user }}"
     password: "{{ mysql_password }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Create MySQL replication user
+  mysql_user:
+    priv: "*.*:REPLICATION SLAVE"
+    host: "%"
+    name: "replication"
+    password: "{{ mysql_replication_pass }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  when: inventory_hostname == groups['db_master'][0]

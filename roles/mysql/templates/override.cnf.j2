@@ -1,0 +1,4 @@
+[mysqld]
+bind-address = 0.0.0.0
+server-id = {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'].split('.')[-1] }}
+

@@ -1,0 +1,107 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    gather_facts: no
+    become: yes
+    tasks:
+    - setup:
+    - apt:
+        update_cache: yes
+    tags:
+      - dns
+      - nginx
+      - reverse
+   
+  - name: Install DNS service
+    hosts: dns_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - dns
+    tags:
+      - dns
+
+  - name: Resolvers
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - resolvers
+    tags:
+      - dns
+
+  - name: Install nginx and node exporters
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - nginx
+    tags: 
+      - nginx
+
+  - name: Install MySQL database
+    hosts: db_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql
+    tags:
+      - db
+
+  - name: Install MySQL database metrics exporter
+    hosts: db_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - mysql_exporter
+    tags:
+      - db-metrics
+
+  - name: Install webapp 'Agama'
+    hosts: web_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - agama
+      - uwsgi
+    tags:
+      - webapp
+
+  - name: Install prometheus
+    hosts: prometheus
+    become: yes
+    gather_facts: no
+    roles:
+      - prometheus
+    tags:
+      - prometheus
+
+  - name: Install grafana
+    hosts: grafana
+    become: yes
+    gather_facts: no
+    roles:
+      - grafana
+    tags:
+      - grafana
+
+  - name: Configure reverse proxies
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - reverse_proxy
+    tags: 
+      - reverse
+      - nginx
+      - webapp
+      - db-metrics
+      - grafana
+      - prometheus
+
+  - name: Setup backup
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles: 
+      - backup

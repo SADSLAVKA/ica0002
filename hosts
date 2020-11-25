@@ -9,6 +9,13 @@ vm1
 
 [db_servers]
 vm2
+vm1
+
+[db_master]
+vm2
+
+[db_slave]
+vm1
 
 [dns_servers]
 vm2
