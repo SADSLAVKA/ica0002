@@ -1,0 +1,11 @@
+- name: Install docker packages
+  apt:
+    name:
+      - python3-docker
+      - docker.io
+
+- name: Enable docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes

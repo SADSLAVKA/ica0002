@@ -77,6 +77,9 @@ prometheus_jobs:
       - www
     port: 9113
 
+grafana_port: 3001
+agama_port: 8000
+
 backup_user_pass: $6$bla$BzrPFWpgDnMpuszHfZO8T3kLJRbFD2sqe8Qz6cj8mnQ4qvGQpxtcz9.fELToSorj3hFLQprSl8iSp9oNMubvR.
 
 backup_scripts:

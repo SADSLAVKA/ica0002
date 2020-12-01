@@ -11,9 +11,10 @@ server {
         server_name _;
         location / {
             {% if inventory_hostname == groups['web_servers'][0] -%}
-            uwsgi_pass localhost:5000;
+            #uwsgi_pass localhost:5000;
             #uwsgi_pass unix:/opt/agama/agama.sock;
-		    include uwsgi_params;
+		    #include uwsgi_params;
+            proxy_pass http://localhost:{{ agama_port }};
             {%- else %}
             try_files $uri $uri/ =404;
             {% endif %}
@@ -48,7 +49,7 @@ server {
         {% endif %}
         {%- if inventory_hostname == groups['grafana'][0] %}
         location /grafana {
-            proxy_pass http://localhost:3000;
+            proxy_pass http://localhost:{{ grafana_port }};
         }
         {% endif %}
 }

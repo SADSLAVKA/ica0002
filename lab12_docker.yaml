@@ -1,0 +1,41 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    gather_facts: no
+    become: yes
+    tasks:
+    - setup:
+#    - apt:
+#        update_cache: yes
+
+  - name: Install docker
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - docker
+
+  - name: Deploy grafana container
+    hosts: grafana
+    gather_facts: no
+    become: yes
+    roles:
+      - grafana_docker
+    tags:
+      - grafana
+
+  - name: Deploy agama container
+    hosts: app_servers
+    gather_facts: no
+    become: yes
+    roles:
+      - agama_docker
+    tags:
+      - agama
+
+  - name: Update nginx config
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - reverse_proxy
