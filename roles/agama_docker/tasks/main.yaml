@@ -1,12 +1,7 @@
 - name: Create needed directories
   file:
-    path: /opt/{{ item }}
+    path: /opt/agama
     state: directory
-  loop:
-    - docker
-    - docker/dockerfiles
-    - docker/dockerfiles/agama
-    - agama
 
 - name: Transfer docker file for agama
   template:

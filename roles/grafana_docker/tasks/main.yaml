@@ -4,7 +4,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0644'
+    mode: '0645'
 
 - name: Create grafana directory
   file:
@@ -12,7 +12,7 @@
     state: directory
     owner: "472"
     group: "472"
-    mode: '0744'
+    mode: '0745'
 
 - name: Grafana container
   docker_container:
