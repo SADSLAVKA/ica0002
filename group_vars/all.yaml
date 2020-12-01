@@ -83,7 +83,7 @@ agama_port: 8000
 backup_user_pass: $6$bla$BzrPFWpgDnMpuszHfZO8T3kLJRbFD2sqe8Qz6cj8mnQ4qvGQpxtcz9.fELToSorj3hFLQprSl8iSp9oNMubvR.
 
 backup_scripts:
-  - name: backup-dash.py
+  - name: backup-grafana.sh
     host: "{{ groups['grafana'][0] }}"
     frequency: "30 1 1 * *"
   - name: backup-database.sh

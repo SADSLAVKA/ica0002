@@ -29,15 +29,15 @@ This group of services monitores state of different components of the infrastruc
 
 ### 2.1 Backup coverage
 #### 2.1.1 Grafana dashboards
-Dashboards that are meant for data visualization must be backuped.
+Files that contain grafana dashboards, user database, plugins and various settings should be backuped.
 
 #### 2.1.2 InfluxDB
 Records for the past 24 hours must be retrieved from the database and archived.
 
-### 2.2 Backup RPO
+### 2.2 Backup RPO  
 #### 2.2.1 Grafana dashboards
-Dashboards should no be older than 31 days. 
-#### 2.2.2 InfuxDB log records
+Configuration files should no be older than 31 days. 
+#### 2.2.2 InfuxDB log records  
 Log loss worth of 4 hours is tolerable.
 
 ### 2.3 Backup RTO

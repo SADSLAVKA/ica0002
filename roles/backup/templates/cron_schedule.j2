@@ -8,5 +8,6 @@
 5 1 * * 1-6 backup duplicity --no-encryption incremental /home/backup/backup/agama.dump  rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/agama
 {% endif %}
 {% if inventory_hostname == groups['grafana'][0] %}
-35 1 1 * * backup duplicity --no-encryption full /home/backup/backup/dashboards rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/dashboards
+35 1 1 * * backup duplicity --no-encryption full /home/backup/backup/grafana rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/grafana
+37 1 1 * * backup duplicity --no-encryption full /home/backup/backup/grafana_docker rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/grafana_docker
 {% endif %}

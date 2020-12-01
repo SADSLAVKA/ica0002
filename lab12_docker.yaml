@@ -14,6 +14,8 @@
     become: yes
     roles:
       - docker
+    tags:
+      - grafana
 
   - name: Deploy grafana container
     hosts: grafana

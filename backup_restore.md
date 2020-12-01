@@ -153,44 +153,169 @@ ansible-playbook lab08_logging.yaml
 
 ### 2.4 Metrics visualization service   
 #### 2.4.1 Restoration of the service itself  
-To restore this service run command from ansible repository. Following command will install metrics visualization service:  
+To restore this service run command from ansible repository. Following command will install metrics visualization service as a regular service:  
 
 ```conf 
 ansible-playbook lab07_grafana.yaml -t grafana   
 ```   
 
-#### 2.4.2 Restoration of the dashboards  
-First step is to download dashboard files form the backup server with following commands. Execute following commands as user `root`:  
+To deploy it as a docker container type the following command:  
+
+```conf  
+ansible-playbook lab12_docker.yaml -t grafana  
+``` 
+
+#### 2.4.2 Restoration of the grafana data as container
+These steps are for containerized grafana. First step is to download configuration files from the backup server with following commands. Execute following commands as user `root`:  
 
 ```conf
 su backup 
 ```  
-This will make you a `backup` user.  
+
+This will make you a `backup` user. Next, we need to create a clean folder where we will download our backup. Type the following commands:   
 
 ```conf  
-duplicity --no-encryption restore rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/dashboards /home/backup/restore/  
+mkdir -vp /home/backup/restore/grafana_docker
+rm -r /home/backup/restore/grafana_docker/*
+```   
+
+Now download the backup into prepared directory. Type the following command:  
+
+```conf  
+duplicity --no-encryption restore rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/grafana_docker /home/backup/restore/grafana_docker
 ```
-This will download the dashboards to `/home/backup/restore` as `.json` files. Their names will correspond to their function.  
+This will download the all grafana files to `/home/backup/restore/grafana_docker`. Most importantly backup should contain `grafana.db` file. It can be checked with the following command:  
+
+```conf  
+ls -la /home/backup/restore/grafana_docker 
+```
+
+Now we need to become root again. Type the following command:  
 
 ```conf  
 exit  
 ```  
-This will turn you back to `root` user.  
 
-For the next step you are going to need a connection to the network where machines are located. On the connected machine open a web browser and type the following in the address bar(assuming that DNS is operational):  
+To restore the data we need to stop running instances of grafana. Since grafana is running in a docker container we need to stop that container. It can be achieved with following command:  
 
 ```conf  
-grafana.verysorry.io/grafana  
-```  
-You will be greeted with a login screen. To login in use standard credentials(user: `admin`, password: `admin`) if no other configured user is present (don't forget to document the password after changing it).  
+docker container stop grafana
+```   
 
-After logging in navigate to the taskbar on the left and hover your mouse over plus sign. In the popup press on the `Import` option. Then use the following command to get the dashboard file contents on the machine where backups are located:  
+To ensure that container is not running:  
+
+```conf  
+docker ps 
+```
+There should not be anything named `grafana`.
+
+Next clean the `/opt/docker/grafana` directory with this command:  
+
+```conf  
+rm -r /opt/docker/grafana/*  
+```  
+
+Now copy all the files from `/home/backup/restore/grafana_docker` to `/opt/docker/grafana`. Type the following command:   
+
+```conf  
+cp -r /home/backup/restore/grafana_docker/* /opt/docker/grafana/ 
+```
+
+Next we need to set appropriate permissions. Type the following command:  
 
 ```conf 
-cat /home/backup/restore/*name-of-dashboard*.json  
+chown -R 472:472 /opt/docker/grafana
+```
+
+Now we can restart the container. Type the following command:   
+
+```conf 
+docker container start grafana
 ```  
 
-Copy the contents of the file into the `Import via panel json` field on the `Import` page. Repeat the process until all desired dashboards are restored.  
+To ensure that container is running:  
+
+```conf  
+docker ps  
+```  
+
+You should see a container named `grafana`.  
+
+#### 2.4.3 Restoration of the grafana data as regular service  
+These steps are for regular grafana. First step is to download configuration files from the backup server with following commands. Execute following commands as user `root`:  
+
+```conf
+su backup 
+```  
+
+This will make you a `backup` user. Next, we need to create a clean folder where we will download our backup. Type the following commands:   
+
+```conf  
+mkdir -vp /home/backup/restore/grafana
+rm -r /home/backup/restore/grafana/*
+```   
+
+Now download the backup into prepared directory. Type the following command:  
+
+```conf  
+duplicity --no-encryption restore rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/grafana /home/backup/restore/grafana
+```
+This will download the all grafana files to `/home/backup/restore/grafana`. Most importantly backup should contain `grafana.db` file. It can be checked with the following command:  
+
+```conf  
+ls -la /home/backup/restore/grafana 
+```
+
+Now we need to become `root` again. Type the following command:  
+
+```conf  
+exit  
+```  
+
+To restore the data we need to stop running instances of grafana. It can be achieved with following command:  
+
+```conf  
+service grafana-server stop
+```   
+
+To ensure that container is not running:  
+
+```conf  
+service grafana-server status
+```
+Status should be `inactive`.
+
+Next clean the `/var/lib/grafana` directory with this command:  
+
+```conf  
+rm -r /var/lib/grafana/*  
+```  
+
+Now copy all the files from `/home/backup/restore/grafana` to `/opt/docker/grafana`. Type the following command:   
+
+```conf  
+cp -r /home/backup/restore/grafana/* /var/lib/grafana/ 
+```
+
+Next we need to set appropriate permissions. Type the following command:  
+
+```conf 
+chown -R grafana:grafana /var/lib/grafana
+```
+
+Now we can restart the service. Type the following command:   
+
+```conf 
+service grafana-server restart
+```  
+
+To ensure that container is running:  
+
+```conf  
+service grafana-server status  
+```  
+
+Status should be `active`.
 
 ## 3. Backups 
 Run the following command from ansible repository to schedule future backups:  
