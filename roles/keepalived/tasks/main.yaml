@@ -1,0 +1,15 @@
+- name: Install keepalived package
+  apt:
+    name: keepalived
+
+- name: Copy the configuration file
+  template: 
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify: Restart keepalived
+
+- name: Enable the service
+  service:
+    name: keepalived
+    enabled: yes
+    state: started

@@ -10,7 +10,7 @@ server {
         {%- endif -%}
         server_name _;
         location / {
-            {% if inventory_hostname == groups['web_servers'][0] -%}
+            {% if inventory_hostname in groups['app_servers'] -%}
             #uwsgi_pass localhost:5000;
             #uwsgi_pass unix:/opt/agama/agama.sock;
 		    #include uwsgi_params;
@@ -33,7 +33,7 @@ server {
         }
         {% endif %}
         
-        {%- if inventory_hostname == groups['web_servers'][0] %}
+        {%- if inventory_hostname in groups['web_servers'] %}
         location /nginx-metrics {
             proxy_pass http://localhost:9113/metrics;
         }

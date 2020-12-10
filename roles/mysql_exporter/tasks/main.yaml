@@ -27,5 +27,6 @@
 - name: Enable exporter
   service:
     name: prometheus-mysqld-exporter
+    state: started
     enabled: yes
 
