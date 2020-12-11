@@ -30,6 +30,15 @@
     tags:
       - dns
 
+  - name: Install prometheus
+    hosts: prometheus
+    become: yes
+    gather_facts: no
+    roles:
+      - prometheus
+    tags:
+      - prometheus
+
   - name: Install nginx and node exporters
     hosts: all
     become: yes
@@ -77,14 +86,14 @@
     tags:
       - web-metrics
 
-  - name: Install prometheus
-    hosts: prometheus
-    become: yes
+  - name: Install docker
+    hosts: all
     gather_facts: no
+    become: yes
     roles:
-      - prometheus
+      - docker
     tags:
-      - prometheus
+      - docker
 
   - name: Install grafana
     hosts: grafana
@@ -94,15 +103,6 @@
       - grafana_docker
     tags:
       - grafana
-
-  - name: Install docker
-    hosts: all
-    gather_facts: no
-    become: yes
-    roles:
-      - docker
-    tags:
-      - docker
 
   - name: Deploy agama container
     hosts: app_servers
@@ -120,11 +120,27 @@
     roles:
       - haproxy
 
-  - name: Install keepalived
-    hosts: web_servers
+  - name: Install HAProxy exporter
+    hosts: haproxy
     gather_facts: no
     become: yes
     roles:
+      - haproxy_exporter
+
+  - name: Install keepalived
+    hosts: haproxy
+    gather_facts: no
+    become: yes
+    roles:
+      - keepalived
+
+  - name: Install keepalived exporter
+    hosts: haproxy
+    gather_facts: no
+    become: yes
+    roles:
+      - keepalived_exporter
+    tags:
       - keepalived
 
   - name: Configure reverse proxies

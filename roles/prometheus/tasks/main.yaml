@@ -6,6 +6,7 @@
   template:
     src: default.j2
     dest: /etc/default/prometheus
+  notify: Restart prometheus
 
 - name: Copy the configuration file for prometheus
   template:

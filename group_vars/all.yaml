@@ -36,7 +36,7 @@ mysql_replication_pass: !vault |
 
 startup: verysorry
 zone: verysorry.io
-public_http: http://193.40.156.86:{{ hostvars[groups['prometheus'][0]]['ansible_port'] }}
+public_http: http://193.40.156.86:{{ hostvars[groups['prometheus'][0]]['ansible_port'] // 100 }}80
 
 
 nginx_exporter_link : https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v0.8.0/nginx-prometheus-exporter-0.8.0-linux-amd64.tar.gz
@@ -76,6 +76,12 @@ prometheus_jobs:
     targets:
       - www
     port: 9113
+  - name: keepalived
+    targets: "{{ groups['haproxy'] }}"
+    port: 9165
+  - name: haproxy
+    targets: "{{ groups['haproxy'] }}"
+    port: 9101
 
 grafana_port: 3001
 agama_port: 8000

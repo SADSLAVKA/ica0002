@@ -1,0 +1,40 @@
+- name: Download the executable
+  unarchive:
+    src: "https://github.com/cafebazaar/keepalived-exporter/releases/download/v1.1.0/keepalived-exporter-1.1.0.linux-amd64.tar.gz"
+    dest: /tmp
+    remote_src: yes
+
+- name: Install the executable
+  copy:
+    src: /tmp/keepalived-exporter-1.1.0.linux-amd64/keepalived-exporter
+    dest: /usr/local/bin/keepalived-exporter
+    mode: '0755'
+    owner: root
+    group: root
+    remote_src: yes
+
+- name: Create the service
+  template:
+    src: keepalived-exporter.service.j2
+    dest: /lib/systemd/system/prometheus-keepalived-exporter.service
+    mode: '0644'
+    owner: root
+    group: root
+  notify:
+    - Reload the daemons
+    - Restart prometheus-keepalived-exporter
+
+- name: Create the link
+  file:
+    src: /lib/systemd/system/prometheus-keepalived-exporter.service
+    dest: /etc/systemd/system/prometheus-keepalived-exporter.service
+    mode: '0644'
+    owner: root
+    group: root
+    state: link
+
+- name: Enable the service
+  service:
+    name: prometheus-keepalived-exporter
+    state: started
+    enabled: yes

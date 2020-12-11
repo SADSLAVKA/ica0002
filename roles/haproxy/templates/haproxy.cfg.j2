@@ -32,6 +32,8 @@ defaults
 
 listen agama
         bind :88
+        stats enable
+        stats uri /haproxy?stats
         {% for vm in groups['app_servers'] %}
         server {{ vm }}_agama {{ vm }}.{{ zone }}:{{ agama_port }}
         {% endfor %}
