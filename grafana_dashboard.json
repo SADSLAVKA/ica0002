@@ -41,8 +41,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
+        "h": 5,
+        "w": 3,
         "x": 0,
         "y": 0
       },
@@ -95,9 +95,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 4,
+        "h": 5,
+        "w": 3,
+        "x": 3,
         "y": 0
       },
       "id": 3,
@@ -127,7 +127,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -162,9 +162,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 8,
+        "h": 5,
+        "w": 3,
+        "x": 6,
         "y": 0
       },
       "id": 12,
@@ -219,9 +219,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 12,
+        "h": 5,
+        "w": 3,
+        "x": 9,
         "y": 0
       },
       "id": 14,
@@ -272,9 +272,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 16,
+        "h": 5,
+        "w": 2,
+        "x": 12,
         "y": 0
       },
       "id": 22,
@@ -285,7 +285,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
           "fields": "",
           "values": false
@@ -342,9 +342,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 20,
+        "h": 5,
+        "w": 2,
+        "x": 14,
         "y": 0
       },
       "id": 24,
@@ -381,6 +381,133 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "UP",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "DOWN",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 16,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.5",
+      "targets": [
+        {
+          "expr": "nginx_up{instance=\"www.verysorry.io:9113\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Nginx status",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 19,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.5",
+      "targets": [
+        {
+          "expr": "rate(\nnginx_http_requests_total{instance=\"www.verysorry.io:9113\"}[1m])",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "HTTP requests per minute",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
           "mappings": [],
           "thresholds": {
             "mode": "percentage",
@@ -399,10 +526,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
+        "h": 5,
+        "w": 3,
         "x": 0,
-        "y": 7
+        "y": 5
       },
       "id": 5,
       "options": {
@@ -453,10 +580,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 4,
-        "y": 7
+        "h": 5,
+        "w": 3,
+        "x": 3,
+        "y": 5
       },
       "id": 6,
       "options": {
@@ -520,10 +647,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 8,
-        "y": 7
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 5
       },
       "id": 26,
       "options": {
@@ -577,10 +704,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 12,
-        "y": 7
+        "h": 5,
+        "w": 3,
+        "x": 9,
+        "y": 5
       },
       "id": 28,
       "options": {
@@ -634,10 +761,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 16,
-        "y": 7
+        "h": 5,
+        "w": 2,
+        "x": 12,
+        "y": 5
       },
       "id": 30,
       "options": {
@@ -704,10 +831,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 20,
-        "y": 7
+        "h": 5,
+        "w": 2,
+        "x": 14,
+        "y": 5
       },
       "id": 32,
       "options": {
@@ -753,10 +880,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 8,
+        "h": 5,
+        "w": 6,
         "x": 0,
-        "y": 14
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 20,
@@ -900,10 +1027,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 8,
-        "y": 14
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 10
       },
       "id": 16,
       "options": {
@@ -931,7 +1058,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "DNS status",
+      "title": "DNS master status",
       "type": "stat"
     },
     {
@@ -957,10 +1084,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 12,
-        "y": 14
+        "h": 5,
+        "w": 3,
+        "x": 9,
+        "y": 10
       },
       "id": 18,
       "options": {
@@ -1015,7 +1142,7 @@
             }
           ],
           "thresholds": {
-            "mode": "percentage",
+            "mode": "absolute",
             "steps": [
               {
                 "color": "green",
@@ -1027,12 +1154,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 16,
-        "y": 14
+        "h": 5,
+        "w": 3,
+        "x": 12,
+        "y": 10
       },
-      "id": 8,
+      "id": 39,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
@@ -1050,7 +1177,7 @@
       "pluginVersion": "7.3.5",
       "targets": [
         {
-          "expr": "nginx_up{instance=\"www.verysorry.io:9113\"}",
+          "expr": "bind_up{instance=\"dns1.verysorry.io:9119\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1058,7 +1185,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Nginx status",
+      "title": "DNS slave status",
       "type": "stat"
     },
     {
@@ -1084,20 +1211,20 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 20,
-        "y": 14
+        "h": 5,
+        "w": 3,
+        "x": 15,
+        "y": 10
       },
-      "id": 10,
+      "id": 40,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "fields": "",
           "values": false
@@ -1107,7 +1234,7 @@
       "pluginVersion": "7.3.5",
       "targets": [
         {
-          "expr": "rate(\nnginx_http_requests_total{instance=\"www.verysorry.io:9113\"}[1m])",
+          "expr": "rate(bind_resolver_queries_total{instance=\"dns1.verysorry.io:9119\"}[1m])",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1115,7 +1242,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "HTTP requests per minute",
+      "title": "DNS queries per minute",
       "type": "stat"
     },
     {
@@ -1154,10 +1281,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
+        "h": 5,
+        "w": 3,
         "x": 0,
-        "y": 21
+        "y": 15
       },
       "id": 33,
       "options": {
@@ -1224,10 +1351,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 4,
-        "y": 21
+        "h": 5,
+        "w": 3,
+        "x": 3,
+        "y": 15
       },
       "id": 34,
       "options": {
@@ -1294,10 +1421,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 8,
-        "y": 21
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 15
       },
       "id": 35,
       "options": {
@@ -1364,10 +1491,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 12,
-        "y": 21
+        "h": 5,
+        "w": 3,
+        "x": 9,
+        "y": 15
       },
       "id": 36,
       "options": {
@@ -1434,10 +1561,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 16,
-        "y": 21
+        "h": 5,
+        "w": 3,
+        "x": 12,
+        "y": 15
       },
       "id": 37,
       "options": {
@@ -1473,24 +1600,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "UP",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "DOWN",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -1504,10 +1614,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 20,
-        "y": 21
+        "h": 5,
+        "w": 3,
+        "x": 15,
+        "y": 15
       },
       "id": 38,
       "options": {
@@ -1553,5 +1663,5 @@
   "timezone": "",
   "title": "Lab 7",
   "uid": "cTGjdjpMk",
-  "version": 2
+  "version": 3
 }

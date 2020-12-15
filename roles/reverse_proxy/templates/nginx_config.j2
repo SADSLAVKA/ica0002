@@ -27,7 +27,7 @@ server {
             proxy_pass http://localhost:9104/metrics;
         }
         {% endif %}
-        {%- if inventory_hostname == groups['dns_servers'][0] %}
+        {%- if inventory_hostname in groups['dns_servers'] %}
         location /bind-metrics {
             proxy_pass http://localhost:9119/metrics;
         }
@@ -42,14 +42,22 @@ server {
         }
         {% endif %}
         
-        {%- if inventory_hostname == groups['prometheus'][0] %}
+        {%- if inventory_hostname in groups['prometheus'] %}
         location /prometheus {
             proxy_pass http://localhost:9090/prometheus;
         }
         {% endif %}
-        {%- if inventory_hostname == groups['grafana'][0] %}
+        {%- if inventory_hostname in groups['grafana'] %}
         location /grafana {
             proxy_pass http://localhost:{{ grafana_port }};
+        }
+        {% endif %}
+        {%- if inventory_hostname in groups['haproxy'] %}
+        location /haproxy-metrics {
+            proxy_pass http://localhost:9101/metrics;
+        }
+        location /keepalived-metrics {
+            proxy_pass http://localhost:9175/metrics;
         }
         {% endif %}
 }

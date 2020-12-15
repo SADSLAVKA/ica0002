@@ -2,6 +2,12 @@
   apt:
     name: prometheus
 
+- name: Enable the service
+  service:
+    name: prometheus
+    state: started
+    enabled: yes
+
 - name: Copy the file with default argument
   template:
     src: default.j2

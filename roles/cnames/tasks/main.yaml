@@ -11,7 +11,7 @@
     key_algorithm: hmac-sha256
     key_name: "{{ dns_update }}"
     key_secret: "{{ dns_update_secret }}"
-    server: "{{  hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
+    server: "{{ hostvars[groups['dns_masters'][0]]['ansible_default_ipv4']['address'] }}"
     zone: "{{ zone }}"
     type: "CNAME"
     record: "{{ item.cname }}"
