@@ -1,5 +1,5 @@
-vm1 ansible_host=193.40.156.86 ansible_port=2522 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
-vm2 ansible_host=193.40.156.86 ansible_port=14122 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm1 ansible_host=193.40.156.86 ansible_port=1922 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
+vm2 ansible_host=193.40.156.86 ansible_port=14022 ansible_ssh_user=ubuntu ansible_python_interpreter=python3
 
 [app_servers]
 vm1
@@ -9,9 +9,9 @@ vm2
 vm1
 vm2
 
-[db_servers]
-vm2
-vm1
+[db_servers:children]
+db_master
+db_slave
 
 [db_master]
 vm2
@@ -19,8 +19,15 @@ vm2
 [db_slave]
 vm1
 
-[dns_servers]
+[dns_masters]
 vm2
+
+[dns_slaves]
+vm1
+
+[dns_servers:children]
+dns_masters
+dns_slaves
 
 [prometheus]
 vm1

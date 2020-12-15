@@ -41,9 +41,40 @@ public_http: http://193.40.156.86:{{ hostvars[groups['prometheus'][0]]['ansible_
 
 nginx_exporter_link : https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v0.8.0/nginx-prometheus-exporter-0.8.0-linux-amd64.tar.gz
 
+localhost: 127.0.0.1
+
+dns_forwarders:
+  - 1.1.1.1
+  - 9.9.9.9
+allowed_addresses:
+  - 192.168.42.0/24
+  - 127.0.0.1/32
+  - 172.17.0.0/16
+
+dns_transfer_secret: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          38333734323732316261353237383833386263356137333336363838646233316631383035653565
+          6438623131643362316435653066336337643066393165330a656661643732656161313438613136
+          62333937656162383833316266353932316161393833356261366133376232346362633064653430
+          6239373730363964620a313731346163366362366433336663643437346633396336396663383239
+          39373765363538386531313133333934313865633462346163663936356336656237646338366261
+          3634323233666134643837633662366538316438623464353166
+
+dns_update: update.key
+dns_update_secret: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31633966613431643035646164663831306631303966623461386366373464653434383462613966
+          6138346431626236613139633731343631393566313032640a383535333662356139613731653234
+          38356133383335313232633837363939323332313232626561343661383564356532306566373337
+          6130396631346563320a363364356534613937663062323232643237363033646331623265616432
+          33363231643361643536346538633234306164626463343139323565613738663535663064666637
+          3033313134366336333431336536353331393537326239643733
+
 dns_cnames: 
   - cname: dns
-    real: "{{ groups['dns_servers'][0] }}"
+    real: "{{ groups['dns_masters'][0] }}"
+  - cname: dns1
+    real: "{{ groups['dns_slaves'][0] }}"
   - cname: prometheus
     real: "{{ groups['prometheus'][0] }}"
   - cname: db
@@ -64,17 +95,13 @@ prometheus_jobs:
     targets: "{{ groups['all'] }}"
     port: 9100
   - name: bind
-    targets:
-      - dns
+    targets: "{{ groups['dns_servers'] }}"
     port: 9119
   - name: mysql
-    targets:
-      - db
-      - dbslave
+    targets: "{{ groups['db_servers'] }}"
     port: 9104
   - name: www
-    targets:
-      - www
+    targets: "{{ groups['web_servers'] }}"
     port: 9113
   - name: keepalived
     targets: "{{ groups['haproxy'] }}"

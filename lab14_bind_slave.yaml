@@ -1,0 +1,36 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    gather_facts: no
+    become: yes
+    tasks:
+    - setup:
+#    - apt:
+#        update_cache: yes
+    tags:
+      - dns
+      - nginx
+      - reverse
+   
+  - name: Install DNS service
+    hosts: dns_servers
+    become: yes
+    gather_facts: no
+    roles:
+      - bind
+    tags:
+      - bind
+
+  - name: Update cnames
+    hosts: dns_masters
+    become: yes
+    gather_facts: no
+    roles:
+      - cnames
+
+  - name: Update resolvers
+    hosts: all
+    become: yes
+    gather_facts: no
+    roles:
+      - resolvers

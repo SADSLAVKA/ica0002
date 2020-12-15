@@ -3,8 +3,21 @@ acl locals {
 	    {{ a }};
       {% endfor %}
 };
+
+key "transfer.key" {
+        algorithm hmac-sha256;
+        secret "{{ dns_transfer_secret }}";
+};
+
+{% if inventory_hostname in groups['dns_masters'] %}
+key "update.key" {
+        algorithm hmac-sha256;
+        secret "{{ dns_update_secret }}";
+};
+{% endif %}
+
 options {
-	directory "/etc/bind";
+	directory "/var/lib/bind";
 	forwarders {
       {% for f in dns_forwarders %}
 	    {{ f }};
@@ -14,10 +27,31 @@ options {
 	dnssec-validation no;
 	auth-nxdomain no;    # conform to RFC1035
 };
-zone "{{ zone }}" {
-        type master;
-        file "db.{{ startup }}";
+
+{% if inventory_hostname in groups['dns_slaves'] %}
+{% for master in groups['dns_masters'] %}
+server {{ hostvars[master]['ansible_default_ipv4']['address'] }} {
+		keys { transfer.key; };
 };
+{% endfor %}
+{% endif %}
+
+zone "{{ zone }}" {
+		file "db.{{ startup }}";
+		{% if inventory_hostname in groups['dns_masters'] %}
+        type master;
+		allow-transfer { key transfer.key; };
+		allow-update { key update.key; };
+		{% else %}
+		type slave;
+		masters {
+			{% for master in groups['dns_masters']%}
+			{{ hostvars[master]['ansible_default_ipv4']['address'] }};
+			{% endfor %}
+		};
+		{% endif %}
+};
+
 statistics-channels {
-  inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+  inet {{ localhost }} port 8053 allow { {{ localhost }}; };
 };

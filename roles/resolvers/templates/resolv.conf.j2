@@ -1,1 +1,9 @@
-nameserver {{ hostvars['vm2']['ansible_default_ipv4']['address'] }}
+search {{ zone }}
+
+{% for slave in groups['dns_slaves'] %}
+nameserver {{ hostvars[slave]['ansible_default_ipv4']['address'] }}
+{% endfor %}
+
+{% for master in groups['dns_masters'] %}
+nameserver {{ hostvars[master]['ansible_default_ipv4']['address'] }}
+{% endfor %}

@@ -10,11 +10,14 @@
 - name: Configure master zone
   template:
     src: db.j2
-    dest: /etc/bind/db.{{ startup }}
+    dest: /var/lib/bind/db.{{ startup }}
+    force: no
+  when: inventory_hostname in groups['dns_masters']
   notify: Reload master zone
   
-- name: Configure DNS forwarders
+- name: Configure DNS
   template:
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify: Restart DNS server
+    

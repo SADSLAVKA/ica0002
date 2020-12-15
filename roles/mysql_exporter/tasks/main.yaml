@@ -16,6 +16,12 @@
     mode: '0400'
   notify: Restart mysql_exporter
 
+- name: Enable exporter
+  service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: yes
+
 - name: Create MySQL user
   mysql_user:
     name: "{{ mysql_exporter_user }}"
@@ -23,10 +29,4 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
     priv: "*.*:PROCESS,REPLICATION CLIENT,SELECT"
     state: present
-
-- name: Enable exporter
-  service:
-    name: prometheus-mysqld-exporter
-    state: started
-    enabled: yes
 
