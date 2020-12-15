@@ -22,7 +22,8 @@
   mysql_db:
     name: "{{ mysql_database }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    
+  no_log: true
+
 - name: Create MySQL user
   mysql_user:
     priv: "{{ mysql_database }}.*:ALL"

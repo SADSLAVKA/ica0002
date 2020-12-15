@@ -7,3 +7,4 @@
     published_ports:
       - "9101:9101"
     command: '--haproxy.scrape-uri="http://{{ inventory_hostname }}.{{ zone }}:88/haproxy?stats;csv"'
+    restart_policy: always

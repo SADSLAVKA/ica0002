@@ -27,3 +27,4 @@
     env:
       GF_SERVER_ROOT_URL: "http://localhost:{{ grafana_port }}/grafana"
       GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+    restart_policy: always
