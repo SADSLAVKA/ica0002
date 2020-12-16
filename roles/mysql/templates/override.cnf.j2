@@ -4,6 +4,6 @@ server-id = {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'].s
 log-bin = /var/log/mysql/mysql-bin.log
 relay-log = /var/log/mysql/mysql-relay.log
 replicate-do-db = {{ mysql_database }}
-{% if inventory_hostname == groups['db_slave'][0] %}
+{% if inventory_hostname in groups['db_slave'] %}
 read-only
 {% endif %}
