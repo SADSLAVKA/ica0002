@@ -1,4 +1,4 @@
-mysql_host: "{{ hostvars[groups['db_master'][0]]['ansible_default_ipv4']['address'] }}"
+mysql_host: "db.verysorry.io"
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
