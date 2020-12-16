@@ -2,6 +2,10 @@
   apt:
     name: prometheus-bind-exporter
 
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10
+
 - name: Enable the exporter
   service:
     name: prometheus-bind-exporter

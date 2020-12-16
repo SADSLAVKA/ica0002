@@ -120,6 +120,7 @@
       - docker
     tags:
       - docker
+      - agama
 
   - name: Deploy agama
     hosts: app_servers

@@ -49,7 +49,7 @@ server {
         {% endif %}
         {%- if inventory_hostname in groups['grafana'] %}
         location /grafana {
-            proxy_pass http://localhost:{{ grafana_port }};
+            proxy_pass http://localhost:3000/grafana;
         }
         {% endif %}
         {%- if inventory_hostname in groups['haproxy'] %}

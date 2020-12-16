@@ -58,7 +58,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "clamp_max(sum by () (avg by (mode) ( (clamp_max(rate(node_cpu{instance=\"vm1.verysorry.io:9100\",mode!=\"idle\",mode!=\"iowait\"}[5m]),1)) or (clamp_max(irate(node_cpu{instance=\"vm1.verysorry.io:9100\",cpu=\"$cpu\",mode!=\"idle\",mode!=\"iowait\"}[5m]),1)) )) *100,100)",
@@ -112,7 +112,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "clamp_max(sum by () (avg by (mode) ( (clamp_max(rate(node_cpu{instance=\"vm2.verysorry.io:9100\",mode!=\"idle\",mode!=\"iowait\"}[5m]),1)) or (clamp_max(irate(node_cpu{instance=\"vm2.verysorry.io:9100\",cpu=\"$cpu\",mode!=\"idle\",mode!=\"iowait\"}[5m]),1)) )) *100,100)",
@@ -182,7 +182,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "mysql_up{instance=\"db.verysorry.io:9104\"}",
@@ -239,7 +239,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "rate(mysql_global_status_queries{instance=\"db.verysorry.io:9104\"}[1m])",
@@ -292,7 +292,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "mysql_global_variables_server_id{instance=\"db.verysorry.io:9104\"}",
@@ -362,7 +362,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "mysql_global_variables_read_only{instance=\"db.verysorry.io:9104\"}",
@@ -432,7 +432,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "nginx_up{instance=\"www.verysorry.io:9113\"}",
@@ -489,7 +489,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "rate(\nnginx_http_requests_total{instance=\"www.verysorry.io:9113\"}[1m])",
@@ -543,7 +543,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "((node_memory_MemTotal{instance=\"vm1.verysorry.io:9100\"} - node_memory_MemAvailable{instance=\"vm1.verysorry.io:9100\"}) / (node_memory_MemTotal{instance=\"vm1.verysorry.io:9100\"})) * 100",
@@ -597,7 +597,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "((node_memory_MemTotal{instance=\"vm2.verysorry.io:9100\"} - node_memory_MemAvailable{instance=\"vm2.verysorry.io:9100\"}) / (node_memory_MemTotal{instance=\"vm2.verysorry.io:9100\"})) * 100",
@@ -667,7 +667,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "mysql_up{instance=\"dbslave.verysorry.io:9104\"}",
@@ -724,7 +724,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "rate(mysql_global_status_queries{instance=\"dbslave.verysorry.io:9104\"}[1m])",
@@ -774,14 +774,14 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "last"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "mysql_global_variables_server_id{instance=\"dbslave.verysorry.io:9104\"}",
@@ -851,7 +851,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "mysql_global_variables_read_only{instance=\"dbslave.verysorry.io:9104\"}",
@@ -882,8 +882,8 @@
       "gridPos": {
         "h": 5,
         "w": 6,
-        "x": 0,
-        "y": 10
+        "x": 16,
+        "y": 5
       },
       "hiddenSeries": false,
       "id": 20,
@@ -903,7 +903,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1029,7 +1029,7 @@
       "gridPos": {
         "h": 5,
         "w": 3,
-        "x": 6,
+        "x": 0,
         "y": 10
       },
       "id": 16,
@@ -1047,7 +1047,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "bind_up{instance=\"dns.verysorry.io:9119\"}",
@@ -1086,7 +1086,7 @@
       "gridPos": {
         "h": 5,
         "w": 3,
-        "x": 9,
+        "x": 3,
         "y": 10
       },
       "id": 18,
@@ -1104,7 +1104,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "rate(bind_resolver_queries_total{instance=\"dns.verysorry.io:9119\"}[1m])",
@@ -1156,7 +1156,7 @@
       "gridPos": {
         "h": 5,
         "w": 3,
-        "x": 12,
+        "x": 6,
         "y": 10
       },
       "id": 39,
@@ -1174,7 +1174,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "bind_up{instance=\"dns1.verysorry.io:9119\"}",
@@ -1213,7 +1213,7 @@
       "gridPos": {
         "h": 5,
         "w": 3,
-        "x": 15,
+        "x": 9,
         "y": 10
       },
       "id": 40,
@@ -1231,10 +1231,137 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "rate(bind_resolver_queries_total{instance=\"dns1.verysorry.io:9119\"}[1m])",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "DNS queries per minute",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "UP",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "DOWN",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 12,
+        "y": 10
+      },
+      "id": 41,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.2.1",
+      "targets": [
+        {
+          "expr": "bind_up{instance=\"dns2.verysorry.io:9119\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "DNS slave status",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 15,
+        "y": 10
+      },
+      "id": 42,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.2.1",
+      "targets": [
+        {
+          "expr": "rate(bind_resolver_queries_total{instance=\"dns3.verysorry.io:9119\"}[1m])",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1286,146 +1413,6 @@
         "x": 0,
         "y": 15
       },
-      "id": 33,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.5",
-      "targets": [
-        {
-          "expr": "haproxy_up{instance=\"vm1.verysorry.io:9101\"}",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Haproxy vm1 status",
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "UP",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "DOWN",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 3,
-        "x": 3,
-        "y": 15
-      },
-      "id": 34,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.5",
-      "targets": [
-        {
-          "expr": "haproxy_up{instance=\"vm2.verysorry.io:9101\"}",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Haproxy vm2 status",
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "UP",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "DOWN",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 3,
-        "x": 6,
-        "y": 15
-      },
       "id": 35,
       "options": {
         "colorMode": "background",
@@ -1441,77 +1428,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
-      "targets": [
-        {
-          "expr": "haproxy_server_up{instance=\"vm1.verysorry.io:9101\", backend=\"agama\"}",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "haproxy_server_up vm1",
-      "type": "stat"
-    },
-    {
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "UP",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "DOWN",
-              "to": "",
-              "type": 1,
-              "value": "0"
-            }
-          ],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 3,
-        "x": 9,
-        "y": 15
-      },
-      "id": 36,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
           "expr": "haproxy_server_up{instance=\"vm2.verysorry.io:9101\", backend=\"agama\"}",
@@ -1563,10 +1480,203 @@
       "gridPos": {
         "h": 5,
         "w": 3,
+        "x": 3,
+        "y": 15
+      },
+      "id": 36,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.2.1",
+      "targets": [
+        {
+          "expr": "haproxy_server_up{instance=\"vm3.verysorry.io:9101\", backend=\"agama\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "haproxy_server_up vm3",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "UP",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "DOWN",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 15
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.2.1",
+      "targets": [
+        {
+          "expr": "haproxy_up{instance=\"vm2.verysorry.io:9101\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Haproxy vm2 status",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "UP",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "DOWN",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            }
+          ],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 9,
+        "y": 15
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.2.1",
+      "targets": [
+        {
+          "expr": "haproxy_up{instance=\"vm3.verysorry.io:9101\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Haproxy vm3 status",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
         "x": 12,
         "y": 15
       },
-      "id": 37,
+      "id": 38,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -1581,10 +1691,10 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "keepalived_vrrp_state{instance=\"vm1.verysorry.io:9165\"}",
+          "expr": "keepalived_vrrp_state{instance=\"vm2.verysorry.io:9165\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1592,7 +1702,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "keepalived_vrrp_state vm1",
+      "title": "keepalived_vrrp_state vm2",
       "type": "stat"
     },
     {
@@ -1619,7 +1729,7 @@
         "x": 15,
         "y": 15
       },
-      "id": 38,
+      "id": 37,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -1634,10 +1744,10 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.5",
+      "pluginVersion": "7.2.1",
       "targets": [
         {
-          "expr": "keepalived_vrrp_state{instance=\"vm2.verysorry.io:9165\"}",
+          "expr": "keepalived_vrrp_state{instance=\"vm3.verysorry.io:9165\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1645,7 +1755,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "keepalived_vrrp_state vm2",
+      "title": "keepalived_vrrp_state vm3",
       "type": "stat"
     }
   ],
@@ -1663,5 +1773,5 @@
   "timezone": "",
   "title": "Lab 7",
   "uid": "cTGjdjpMk",
-  "version": 3
+  "version": 4
 }
