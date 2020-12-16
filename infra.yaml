@@ -19,6 +19,7 @@
       - agama
       - docker
       - backup
+      - node_exporter
 
   - name: Install DNS service
     hosts: dns_servers
@@ -100,6 +101,8 @@
     gather_facts: no
     become: yes
     roles:
+      - node_exporter
+    tags:
       - node_exporter
 
   - name: Install MySQL
