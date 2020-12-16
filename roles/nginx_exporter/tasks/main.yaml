@@ -33,10 +33,6 @@
     name: prometheus
     home: /var/lib/prometheus
 
-- name: Start the service
-  service:
-    name: prometheus-nginx-exporter
-    state: started
 #- name: Start the service 
 #  become: yes
 #  shell: "systemctl start prometheus-nginx-exporter"

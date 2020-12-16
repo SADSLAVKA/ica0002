@@ -20,19 +20,6 @@
     mode: g+r
   when: inventory_hostname == groups['grafana'][0]
 
-- name: Set permissions for docker folder
-  file:
-    path: /opt/docker
-    mode: '0645'
-  when: inventory_hostname == groups['grafana'][0]
-
-- name: Set permissions for grafana_docker folder
-  file:
-    path: /opt/docker/grafana
-    recurse: yes
-    mode: '0745'
-  when: inventory_hostname == groups['grafana'][0]
-
 - name: Create backup user for MySQL
   mysql_user:
     priv: "{{ mysql_database }}.*:SELECT,SHOW VIEW,TRIGGER,LOCK TABLES"

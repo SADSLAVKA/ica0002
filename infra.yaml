@@ -1,0 +1,160 @@
+---
+  - name: Collect info about all VMs
+    hosts: all
+    gather_facts: no
+    become: yes
+    tasks:
+    - setup:
+    - apt:
+        update_cache: yes
+    tags:
+      - bind
+      - nginx
+      - reverse
+      - influxdb
+      - rsyslog
+      - mysql
+      - prometheus
+      - grafana
+      - agama
+      - docker
+      - backup
+
+  - name: Install DNS service
+    hosts: dns_servers
+    gather_facts: no
+    become: yes
+    roles:
+      - bind
+      - bind_exporter
+    tags:
+      - bind
+
+  - name: Update CNAMEs
+    hosts: dns_masters
+    gather_facts: no
+    become: yes
+    roles:
+      - cnames
+    tags: 
+      - bind
+
+  - name: Update resolvers
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - resolvers
+    tags:
+      - bind
+
+  - name: Influxdb and Telegraf
+    hosts: influxdb
+    gather_facts: no
+    become: yes
+    roles:
+      - influxdb
+    tags:
+      - influxdb
+
+  - name: Rsyslog configuration
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - rsyslog
+    tags:
+      - rsyslog
+
+  - name: Install Prometheus
+    hosts: prometheus
+    gather_facts: no
+    become: yes
+    roles:
+      - prometheus
+    tags:
+      - prometheus
+
+  - name: Install Grafana
+    hosts: grafana
+    gather_facts: no
+    become: yes
+    roles:
+      - grafana
+    tags:
+      - grafana
+
+  - name: Install nginx
+    hosts: web_servers
+    gather_facts: no
+    become: yes
+    roles:
+      - nginx
+      - nginx_exporter
+      - reverse_proxy
+    tags:
+      - nginx
+
+  - name: Install node exporters
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - node_exporter
+
+  - name: Install MySQL
+    hosts: db_servers
+    gather_facts: no
+    become: yes
+    roles:
+      - mysql
+      - mysql_exporter
+    tags:
+      - mysql
+
+  - name: Install docker
+    hosts: app_servers
+    gather_facts: no
+    become: yes
+    roles:
+      - docker
+    tags:
+      - docker
+
+  - name: Deploy agama
+    hosts: app_servers
+    gather_facts: no
+    become: yes
+    roles:
+      - agama_docker
+    tags:
+      - agama
+
+  - name: Install HAProxy
+    hosts: haproxy
+    gather_facts: no
+    become: yes
+    roles:
+      - haproxy
+      - haproxy_exporter
+    tags:
+      - haproxy
+
+  - name: Install keepalived
+    hosts: haproxy
+    gather_facts: no
+    become: yes
+    roles:
+      - keepalived
+      - keepalived_exporter
+    tags:
+      - keepalived
+
+  - name: Enable backups
+    hosts: all
+    gather_facts: no
+    become: yes
+    roles:
+      - backup
+    tags:
+      - backup

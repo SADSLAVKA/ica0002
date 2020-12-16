@@ -3,11 +3,10 @@
 {{ script.frequency }} backup /home/backup/scripts/{{ script.name }}
 {% endif %}
 {% endfor %}
-{% if inventory_hostname == groups['db_servers'][0] %}
+{% if inventory_hostname == groups['db_slave'][0] %}
 5 1 * * 0 backup duplicity --no-encryption full /home/backup/backup/agama.dump  rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/agama
 5 1 * * 1-6 backup duplicity --no-encryption incremental /home/backup/backup/agama.dump  rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/agama
 {% endif %}
 {% if inventory_hostname == groups['grafana'][0] %}
 35 1 1 * * backup duplicity --no-encryption full /home/backup/backup/grafana rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/grafana
-37 1 1 * * backup duplicity --no-encryption full /home/backup/backup/grafana_docker rsync://SADSLAVKA@backup.verysorry.io//home/SADSLAVKA/grafana_docker
 {% endif %}

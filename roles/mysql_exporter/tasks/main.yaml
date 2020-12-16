@@ -16,6 +16,10 @@
     mode: '0400'
   notify: Restart mysql_exporter
 
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10
+
 - name: Enable exporter
   service:
     name: prometheus-mysqld-exporter

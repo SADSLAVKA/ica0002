@@ -75,6 +75,8 @@ dns_cnames:
     real: "{{ groups['dns_masters'][0] }}"
   - cname: dns1
     real: "{{ groups['dns_slaves'][0] }}"
+  - cname: dns2
+    real: "{{ groups['dns_slaves'][1] }}"
   - cname: prometheus
     real: "{{ groups['prometheus'][0] }}"
   - cname: db
@@ -88,7 +90,7 @@ dns_cnames:
   - cname: influxdb
     real: "{{ groups['influxdb'][0] }}"
 
-backup_ip: 192.168.42.39
+backup_ip: 192.168.42.156
 
 prometheus_jobs:
   - name: node
@@ -98,6 +100,7 @@ prometheus_jobs:
     targets: 
       - dns
       - dns1
+      - dns2
     port: 9119
   - name: mysql
 #    targets: "{{ groups['db_servers'] }}"
@@ -134,7 +137,7 @@ backup_scripts:
     host: "{{ groups['grafana'][0] }}"
     frequency: "30 1 1 * *"
   - name: backup-database.sh
-    host: "{{ groups['db_servers'][0] }}"
+    host: "{{ groups['db_slave'][0] }}"
     frequency: "1 1 * * *"
   - name: backup-syslog.sh
     host: "{{ groups['influxdb'][0] }}"

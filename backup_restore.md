@@ -38,8 +38,14 @@ ansible-playbook lab07_grafana.yaml -t webapp
 To restore users' data turn to part `1.4.2` of this document.
 
 ### 1.4 App database (MySQL)
-#### 1.4.1 Restoration of the service itself  
-Run this command from ansible repository:  
+#### 1.4.1 Restoration of the service itself
+In order to get both replication master and slave in sync we need to make a clean install. Run the following command as `root`:  
+
+```conf  
+apt purge mysql-*
+```
+
+Then run this command from ansible repository:  
 
 ```conf 
 ansible-playbook lab07_grafana.yaml -t db 
